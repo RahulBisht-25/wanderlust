@@ -19,6 +19,7 @@ const listingRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
+
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
 // Connect to Database
@@ -58,14 +59,39 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 
 app.use((req, res, next) => { 
     res.locals.success = req.flash("success");
-     res.locals.error = req.flash("error"); next(); });
+     res.locals.error = req.flash("error");
+     res.locals.currUser = req.user; 
+     next(); });
 // Routes
+// //
+// app.get("/demouser", async (req, res) => {
+//     try {
+//         let fakeUser = new User({
+//             email: "student2@gmail.com",
+//             username: "delta-student2"
+//         });
 
+//         let registeredUser = await User.register(
+//             fakeUser,
+//             "helloworld"
+//         );
+
+//         res.send(registeredUser);
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).send(err.message);
+//     }
+// });
+// //
 app.get("/", (req, res) => {
     res.send("Hi, I am root");
 });

@@ -9,10 +9,11 @@ const listingSchema = new Schema({
 
     description: String,
 
-    image: {
-        filename: String,
-        url: String,
-    },
+ image: {
+  type: String,
+  default: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=60",
+  set: (v) => (v === "" ? "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=60" : v),
+},
 
     price: Number,
     location: String,
@@ -21,13 +22,18 @@ const listingSchema = new Schema({
         {type:Schema.Types.ObjectId,
             ref:"Review"
         }
-    ]
+    ],
+    owner:{
+        type:Schema.Types.ObjectId,
+       ref: "User",
+
+    }
 
 });
 
 listingSchema.post("findOneAndDelete",async(listing)=>{
     if(listing){
-        await Review.deleteMant({_id:{$in:listing.review}});
+        await Review.deleteMany({_id:{$in:listing.review}});
 
     }
 });
