@@ -82,3 +82,8 @@ body {
     opacity: 0.2;
     background-color: white;
 }
+.show-img{
+    height: 50vh !important;
+}
+
+.btnss{display: flex;}

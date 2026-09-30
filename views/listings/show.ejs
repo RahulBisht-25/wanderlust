@@ -1,8 +1,9 @@
 <% layout("/layouts/boilerplate")%>
-
+<div class="row">
+    <div class="col-8 offset-2">
     <h3> <%= listing.title %></h3>
-<div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="<%= listing.image %>" alt="listing_image">
+<div class="card" >
+  <img class="card-img-top show-img " src="<%= listing.image %>" alt="listing_image">
   <div class="card-body">
     <p class="card-text"></p>
   </div>
@@ -23,14 +24,15 @@
 
     </ul>
    
-
+    <div class="btnss">
     <%if (currUser && currUser._id.equals(listing.owner._id)){%>
-   <a href="/listings/<%= listing._id %>/edit"><button>Edit this</button></a>
+   <a href="/listings/<%= listing._id %>/edit" class=" offset-0 "><button>Edit</button></a>
     <br>
   <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
-    <button type="submit">Delete</button>
+    <button type="submit" class="offset-2 ">Delete</button>
 </form>
 <%}%>
+</div>
 
 
 <div class="mb-3">
@@ -111,4 +113,6 @@
         </div>
 
     <% } %>
+</div>
+</div>
 </div>
